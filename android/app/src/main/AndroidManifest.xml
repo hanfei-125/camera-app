@@ -17,7 +17,7 @@
     <application
         android:label="AI相机"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:requestLegacyExternalStorage="true">
 
         <activity

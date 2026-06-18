@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -89,7 +90,7 @@ class PhotoAnalysisService {
       return PoseData(
         detected: true,
         landmarks: landmarks,
-        confidence: pose.confidence,
+        confidence: 0.8, // Default confidence for detected pose
       );
     } catch (e) {
       return null;
@@ -586,7 +587,7 @@ class PhotoAnalysisService {
 
 /// 在 isolate 中解码图片（顶层函数，供 compute 调用）
 img.Image? _decodeImage(List<int> bytes) {
-  return img.decodeImage(bytes);
+  return img.decodeImage(Uint8List.fromList(bytes));
 }
 
 // 辅助数据类

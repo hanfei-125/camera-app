@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Icon(
-                                Icons.wb_sunny_auto,
+                                Icons.wb_sunny,
                                 color: AppTheme.primaryColor,
                               ),
                             ),
