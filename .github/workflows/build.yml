@@ -1,42 +1,33 @@
 name: Build APK
 
 on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
   workflow_dispatch:
-    inputs:
-      variant:
-        description: 'Build variant'
-        required: false
-        default: 'debug'
-        type: choice
-        options:
-          - debug
-          - release
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
-
+          
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Build APK
-        run: |
-          flutter build apk --${{ inputs.variant || 'debug' }}
-
+        
+      - name: Build debug APK
+        run: flutter build apk --debug
+        
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-${{ inputs.variant || 'debug' }}-apk
-          path: build/app/outputs/flutter-apk/*.apk
-          retention-days: 7
+          name: app-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
