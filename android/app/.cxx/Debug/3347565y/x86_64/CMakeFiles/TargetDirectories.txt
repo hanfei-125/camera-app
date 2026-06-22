@@ -1,0 +1,2 @@
+D:/WorkBuddy-Projects/Claw/camera-app/android/app/.cxx/Debug/3347565y/x86_64/CMakeFiles/edit_cache.dir
+D:/WorkBuddy-Projects/Claw/camera-app/android/app/.cxx/Debug/3347565y/x86_64/CMakeFiles/rebuild_cache.dir
