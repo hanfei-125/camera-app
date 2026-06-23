@@ -5,9 +5,9 @@
 - **项目名称**：AI相机（Smart Camera）
 - **目标平台**：小米手机（Android）
 - **开发框架**：Flutter 3.x
-- **文档版本**：v2.0
-- **更新日期**：2026-06-22
-- **实现状态**：⚠️ 核心功能已完成，正在规划 v1.5 模块化重构和新模块开发
+- **文档版本**：v2.1
+- **更新日期**：2026-06-23
+- **实现状态**：⚠️ 核心功能已完成，v1.5 模块化重构进行中（框架已搭建，集成待完成）
 
 ---
 
@@ -27,19 +27,26 @@ camera-app/
 │   │   └── entities/
 │   │       ├── user.dart                  ✅ 用户实体
 │   │       └── photo_analysis.dart         ✅ 分析结果实体
-│   └── presentation/
-│       ├── bloc/
-│       │   ├── auth/auth_bloc.dart        ✅ 认证状态管理
-│       │   ├── camera/camera_bloc.dart     ✅ 相机状态管理
-│       │   └── analysis/analysis_bloc.dart ✅ AI分析状态管理
-│       └── screens/
-│           ├── splash_screen.dart          ✅ 启动页
-│           ├── login_screen.dart           ✅ 登录页
-│           ├── home_screen.dart            ✅ 首页
-│           ├── environment_confirmation_screen.dart ✅ 环境确认页
-│           ├── camera_screen.dart          ✅ 环境照片拍摄页
-│           ├── analysis_result_screen.dart ✅ AI分析结果页
-│           └── main_shot_screen.dart       ✅ 正式拍摄页（支持手动参数调整）
+│   ├── presentation/
+│   │   ├── bloc/
+│   │   │   ├── auth/auth_bloc.dart        ✅ 认证状态管理
+│   │   │   ├── camera/camera_bloc.dart     ✅ 相机状态管理
+│   │   │   └── analysis/analysis_bloc.dart ✅ AI分析状态管理
+│   │   └── screens/
+│   │       ├── splash_screen.dart          ✅ 启动页
+│   │       ├── login_screen.dart           ✅ 登录页
+│   │       ├── home_screen.dart            ✅ 首页
+│   │       ├── environment_confirmation_screen.dart ✅ 环境确认页
+│   │       ├── camera_screen.dart          ✅ 环境照片拍摄页
+│   │       ├── analysis_result_screen.dart ✅ AI分析结果页
+│   │       └── main_shot_screen.dart       ✅ 正式拍摄页（支持手动参数调整）
+│   └── shared/                            ⚠️ Phase 1.5 新增（框架完成，集成待完成）
+│       ├── data/
+│       │   └── models/
+│       │       └── daily_plan_model.dart   ✅ 数据模型完整
+│       └── services/
+│           ├── workbuddy_service.dart      ⚠️ 框架完成，API未配置
+│           └── notification_service.dart   ⚠️ 框架完成，timezone依赖缺失
 ├── android/app/src/main/AndroidManifest.xml ✅ Android权限配置
 ├── pubspec.yaml                           ✅ 依赖管理
 └── README.md                              ✅ 项目说明
@@ -492,11 +499,19 @@ App
 
 ### Phase 1.5 - 模块化重构（v1.5）
 - [x] **架构设计**：[MODULAR_ARCHITECTURE.md](docs/MODULAR_ARCHITECTURE.md) 已完成
-- [ ] **创建模块目录结构**：建立 modules/ 和 shared/ 目录
-- [ ] **迁移共享层**：将 theme/constants/utils 迁移到 shared/
-- [ ] **WorkBuddy数据端口**：开发与WorkBuddy的数据连接，获取每日学习计划、锻炼计划等内容
-- [ ] **统一提醒系统**：整合三个模块的提醒功能，提供统一的通知管理
+- [x] **模块目录结构**：`lib/shared/` 目录已创建，框架搭建完成
+- [ ] **迁移共享层**：将 theme/constants/utils 迁移到 shared/（待进行）
+- [x] **WorkBuddy数据端口**：框架已完成（`lib/shared/services/workbuddy_service.dart`），待配置API地址并集成到 main.dart
+- [x] **统一提醒系统**：框架已完成（`lib/shared/services/notification_service.dart`），待集成到 main.dart
 - [ ] **拍照模块重构**：封装为独立模块，适配新架构
+- ⚠️ **集成检查清单**（后续所有模块开发必须完成以下集成）：
+  1. ✅ 框架搭建完成
+  2. ❌ `pubspec.yaml` 中声明所需依赖（`http`、`timezone` 等）
+  3. ❌ 在 `main.dart` 中初始化/引用新模块
+  4. ❌ 在对应页面中调用新服务
+  5. ❌ 构建验证通过（`flutter build apk --debug`）
+
+> **⚠️ 重要原则**：所有模块开发必须完成集成工作。代码框架搭建 ≠ 功能完成，未经集成的模块不允许提交。
 
 ### Phase 2（v1.1）
 - [ ] 添加相册管理功能
